@@ -19,9 +19,12 @@
     "fastify": "^4.17.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "17.6.1",
+    "@commitlint/config-conventional": "17.6.1",
     "@rocketseat/eslint-config": "1.2.0",
     "@types/node": "18.16.3",
     "eslint": "8.39.0",
+    "husky": "8.0.3",
     "tsup": "6.7.0",
     "tsx": "^3.12.7",
     "typescript": "^5.0.4",
