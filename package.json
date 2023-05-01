@@ -4,7 +4,8 @@
   "description": "A platform where users can ask questions and share with other users anonymously or publicly.",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "commit": "git-cz"
   },
   "keywords": [
     "#fastify",
@@ -18,13 +19,21 @@
   "dependencies": {
     "fastify": "^4.17.0"
   },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
   "devDependencies": {
     "@commitlint/cli": "17.6.1",
     "@commitlint/config-conventional": "17.6.1",
+    "@commitlint/cz-commitlint": "17.5.0",
     "@rocketseat/eslint-config": "1.2.0",
     "@types/node": "18.16.3",
+    "commitizen": "4.3.0",
     "eslint": "8.39.0",
     "husky": "8.0.3",
+    "inquirer": "8.2.5",
     "tsup": "6.7.0",
     "tsx": "^3.12.7",
     "typescript": "^5.0.4",
