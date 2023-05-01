@@ -1,0 +1,31 @@
+{
+  "name": "qurios-backend",
+  "version": "1.0.0",
+  "description": "A platform where users can ask questions and share with other users anonymously or publicly.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
+  "keywords": [
+    "#fastify",
+    "#node",
+    "#ts",
+    "#zod",
+    "#portfolio"
+  ],
+  "author": "fabriciolak",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^4.17.0"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "1.2.0",
+    "@types/node": "18.16.3",
+    "eslint": "8.39.0",
+    "tsup": "6.7.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4",
+    "vite-tsconfig-paths": "4.2.0",
+    "vitest": "0.30.1"
+  }
+}
