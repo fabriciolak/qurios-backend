@@ -1,5 +1,5 @@
 import crypto from 'node:crypto'
-import { User } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
 import { UsersRepository } from '../users-repository'
 
 export class InMemoryUsersRepository implements UsersRepository {
@@ -7,6 +7,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async create({
     name,
+    username,
     email,
     password_hash,
   }: Omit<User, 'id' | 'created_at'>): Promise<User> {
@@ -15,6 +16,7 @@ export class InMemoryUsersRepository implements UsersRepository {
       name,
       email,
       password_hash,
+      username,
       created_at: new Date(),
     }
 
@@ -23,8 +25,26 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user
   }
 
+  async update(userId: Prisma.UserUpdateInput): Promise<User | null> {
+    const userIndex = this.users.findIndex((data) => data.id === userId)
+
+    console.log(userIndex)
+
+    return null
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find((data) => data.email === email)
+
+    if (!user) {
+      return null
+    }
+
+    return user
+  }
+
+  async findByUsername(username: string): Promise<User | null> {
+    const user = this.users.find((data) => data.username === username)
 
     if (!user) {
       return null
