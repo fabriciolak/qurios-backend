@@ -45,6 +45,24 @@ describe('Create user use case', () => {
         email: 'janedoe@email.com',
         password: '123456',
       }),
-    ).rejects.toThrowError('Username with same name already exists')
+    ).rejects.toThrowError('Username with same username already exists')
+  })
+
+  it('Should not be possible create a user with a existing email', async () => {
+    await sut.execute({
+      name: 'John Doe',
+      username: 'johndoe',
+      email: 'johndoe@email.com',
+      password: '123456',
+    })
+
+    await expect(() =>
+      sut.execute({
+        name: 'Jane Doe',
+        username: 'janedoe',
+        email: 'johndoe@email.com',
+        password: '123456',
+      }),
+    ).rejects.toThrowError('Email already exists.')
   })
 })
