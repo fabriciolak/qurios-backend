@@ -5,6 +5,7 @@ import { EmailAlreadyExistsError } from '../errors/email-already-exists'
 
 interface CreateUserUseCaseRequest {
   name: string
+  username: string
   email: string
   password: string
 }
@@ -20,6 +21,7 @@ export class CreateUserUseCase {
     email,
     name,
     password,
+    username,
   }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
     const password_hash = await hash(password, 6)
 
@@ -29,8 +31,17 @@ export class CreateUserUseCase {
       throw new EmailAlreadyExistsError()
     }
 
+    const usernameAlreadyExists = await this.usersRepository.findByUsername(
+      username,
+    )
+
+    if (usernameAlreadyExists) {
+      throw new Error('Username with same username already exists')
+    }
+
     const user = await this.usersRepository.create({
       name,
+      username,
       email,
       password_hash,
     })
