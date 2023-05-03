@@ -36,7 +36,7 @@ export class CreateUserUseCase {
     )
 
     if (usernameAlreadyExists) {
-      throw new Error('Username with same name already exists')
+      throw new Error('Username with same username already exists')
     }
 
     const user = await this.usersRepository.create({
