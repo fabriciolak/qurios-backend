@@ -12,7 +12,9 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
       .string()
       .min(1, { message: "Username can't be less than 1" })
       .max(16, { message: "Username can't be greater than 24" }),
-    password: z.string(),
+    password: z
+      .string()
+      .min(6, { message: 'Password must be at least 6 characters' }),
   })
 
   const { name, username, email, password } = userBodySchema.parse(request.body)
