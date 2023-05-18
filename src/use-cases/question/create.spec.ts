@@ -1,6 +1,6 @@
 import { InMemoryQuestionRepository } from '@/repositories/in-memory/in-memory-question-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { CreateQuestionUseCase } from './create-question'
+import { CreateQuestionUseCase } from './create'
 import { CreateUserUseCase } from '../user/create-user'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 
@@ -76,7 +76,7 @@ describe('Question use case', () => {
         votes: 0,
         owner_id: user.id,
       }),
-    ).rejects.toThrowError('no title specified')
+    ).rejects.toThrowError('title are required')
 
     await expect(
       sutCreateQuestion.execute({
@@ -87,6 +87,6 @@ describe('Question use case', () => {
         votes: 0,
         owner_id: user.id,
       }),
-    ).rejects.toThrowError('no content specified')
+    ).rejects.toThrowError('content are required')
   })
 })

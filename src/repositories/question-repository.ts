@@ -10,4 +10,9 @@ interface QuestionExtendedProps
 
 export interface QuestionRepository {
   create(data: QuestionExtendedProps): Promise<Question>
+  update(
+    questionId: string,
+    data: Prisma.QuestionUpdateInput,
+  ): Promise<Question | null>
+  delete(questionId: string): Promise<{}>
 }

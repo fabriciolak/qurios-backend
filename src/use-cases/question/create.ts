@@ -25,11 +25,11 @@ export class CreateQuestionUseCase {
     owner_id,
   }: CreateQuestionUseCaseRequest): Promise<CreateQuestionUseCaseResponse> {
     if (!title) {
-      throw new Error('no title specified')
+      throw new Error('title are required')
     }
 
     if (!content) {
-      throw new Error('no content specified')
+      throw new Error('content are required')
     }
 
     const question = await this.questionRepository.create({
