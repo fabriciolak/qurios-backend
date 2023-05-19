@@ -10,7 +10,7 @@ afterAll(() => {
   app.close()
 })
 
-describe('Create user (E2E))', () => {
+describe('Register user (E2E))', () => {
   it('Should be register a new user', async () => {
     await request(app.server)
       .post('/users')
@@ -35,7 +35,11 @@ describe('Create user (E2E))', () => {
 
     const response = await request(app.server).post('/users').send(user)
 
-    expect(response.status).toBe(409)
-    expect(response.body.message).toBe('Email already exists.')
+    expect(response.statusCode).toBe(409)
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        message: 'Email already exists.',
+      }),
+    )
   })
 })

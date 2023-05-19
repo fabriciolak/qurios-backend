@@ -1,13 +1,13 @@
 import { InMemoryQuestionRepository } from '@/repositories/in-memory/in-memory-question-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateQuestionUseCase } from './create'
-import { CreateUserUseCase } from '../user/create-user'
+import { RegisterUserUseCase } from '../user/register'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 
 let sutCreateQuestion: CreateQuestionUseCase
 let questionRepository: InMemoryQuestionRepository
 
-let sutCreateUser: CreateUserUseCase
+let sutCreateUser: RegisterUserUseCase
 let usersRepository: InMemoryUsersRepository
 
 describe('Question use case', () => {
@@ -16,7 +16,7 @@ describe('Question use case', () => {
     sutCreateQuestion = new CreateQuestionUseCase(questionRepository)
 
     usersRepository = new InMemoryUsersRepository()
-    sutCreateUser = new CreateUserUseCase(usersRepository)
+    sutCreateUser = new RegisterUserUseCase(usersRepository)
   })
 
   it('Should be crate a question', async () => {

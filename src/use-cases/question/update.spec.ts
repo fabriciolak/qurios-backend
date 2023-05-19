@@ -3,7 +3,7 @@ import { UpdateQuestionUseCase } from './update'
 import { InMemoryQuestionRepository } from '@/repositories/in-memory/in-memory-question-repository'
 import { CreateQuestionUseCase } from './create'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { CreateUserUseCase } from '../user/create-user'
+import { RegisterUserUseCase } from '../user/register'
 import { hash } from 'bcryptjs'
 
 let questionsRepository: InMemoryQuestionRepository
@@ -11,7 +11,7 @@ let sut: UpdateQuestionUseCase
 let createQuestion: CreateQuestionUseCase
 
 let usersRepository: InMemoryUsersRepository
-let userCreate: CreateUserUseCase
+let userCreate: RegisterUserUseCase
 
 describe('Update question use case', () => {
   beforeEach(async () => {
@@ -20,7 +20,7 @@ describe('Update question use case', () => {
     createQuestion = new CreateQuestionUseCase(questionsRepository)
 
     usersRepository = new InMemoryUsersRepository()
-    userCreate = new CreateUserUseCase(usersRepository)
+    userCreate = new RegisterUserUseCase(usersRepository)
   })
 
   it('Should be update a question', async () => {

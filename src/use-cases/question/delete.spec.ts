@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryQuestionRepository } from '@/repositories/in-memory/in-memory-question-repository'
 import { CreateQuestionUseCase } from './create'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { CreateUserUseCase } from '../user/create-user'
+import { RegisterUserUseCase } from '../user/register'
 import { hash } from 'bcryptjs'
 import { DeleteQuestionUseCase } from './delete'
 
@@ -11,7 +11,7 @@ let sut: DeleteQuestionUseCase
 let createQuestion: CreateQuestionUseCase
 
 let usersRepository: InMemoryUsersRepository
-let userCreate: CreateUserUseCase
+let userCreate: RegisterUserUseCase
 
 describe('Delete question use case', () => {
   beforeEach(async () => {
@@ -20,7 +20,7 @@ describe('Delete question use case', () => {
     createQuestion = new CreateQuestionUseCase(questionsRepository)
 
     usersRepository = new InMemoryUsersRepository()
-    userCreate = new CreateUserUseCase(usersRepository)
+    userCreate = new RegisterUserUseCase(usersRepository)
   })
 
   it('Should be delete a question', async () => {
