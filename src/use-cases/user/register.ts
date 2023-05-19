@@ -3,18 +3,18 @@ import { hash } from 'bcryptjs'
 import { UsersRepository } from '@/repositories/users-repository'
 import { EmailAlreadyExistsError } from '../errors/email-already-exists'
 
-interface CreateUserUseCaseRequest {
+interface RegisterUserUseCaseRequest {
   name: string
   username: string
   email: string
   password: string
 }
 
-interface CreateUserUseCaseResponse {
+interface RegisterUserUseCaseResponse {
   user: User
 }
 
-export class CreateUserUseCase {
+export class RegisterUserUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({
@@ -22,7 +22,7 @@ export class CreateUserUseCase {
     name,
     password,
     username,
-  }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
+  }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
     const emailAlreadyExists = await this.usersRepository.findByEmail(email)
 
     if (emailAlreadyExists) {

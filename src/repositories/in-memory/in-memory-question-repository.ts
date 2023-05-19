@@ -21,10 +21,49 @@ export class InMemoryQuestionRepository implements QuestionRepository {
       owner_id: data.anonymous ? '' : data.owner_id,
     }
 
-    console.log(question)
-
     this.questions.push(question)
 
     return question
+  }
+
+  async update(
+    questionId: string,
+    data: Omit<Question, 'owner_id' | 'id' | 'slug' | 'votes'>,
+  ): Promise<Question | null> {
+    const questionIndex = this.questions.findIndex(
+      (question) => question.id === questionId,
+    )
+
+    if (questionIndex === -1) {
+      return null
+    }
+
+    const updatedQuestion = {
+      ...this.questions[questionIndex],
+      title:
+        data.title !== undefined
+          ? String(data.title)
+          : this.questions[questionIndex].title,
+      updated_at:
+        data.updated_at !== undefined
+          ? data.updated_at
+          : this.questions[questionIndex].updated_at,
+    }
+
+    this.questions[questionIndex] = updatedQuestion
+
+    return updatedQuestion
+  }
+
+  async delete(questionId: string): Promise<{}> {
+    const questionToDeleteIndex = this.questions.findIndex(
+      (question) => question.id === questionId,
+    )
+
+    if (questionToDeleteIndex !== -1) {
+      this.questions.splice(questionToDeleteIndex, 1)
+    }
+
+    return {}
   }
 }

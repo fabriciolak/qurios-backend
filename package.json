@@ -11,6 +11,7 @@
     "test:watch": "vitest  --dir src/use-cases",
     "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
     "test:e2e": "vitest run --dir src/http",
+    "test:e2e:watch": "vitest --dir src/http",
     "test:coverage": "vitest run --coverage",
     "commit": "git-cz"
   },

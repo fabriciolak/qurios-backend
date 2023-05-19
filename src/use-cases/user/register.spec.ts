@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { CreateUserUseCase } from './create-user'
+import { RegisterUserUseCase } from './register'
 import { compare } from 'bcryptjs'
 
 let usersRepository: InMemoryUsersRepository
-let sut: CreateUserUseCase
+let sut: RegisterUserUseCase
 
 describe('Create user use case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
-    sut = new CreateUserUseCase(usersRepository)
+    sut = new RegisterUserUseCase(usersRepository)
   })
 
   it('Should be possible create a user', async () => {

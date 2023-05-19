@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { UpdateUserUseCase } from './update-user'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { CreateUserUseCase } from './create-user'
+import { RegisterUserUseCase } from './register'
 import { compare } from 'bcryptjs'
 import { User } from '@prisma/client'
 import { EmailAlreadyExistsError } from '../errors/email-already-exists'
@@ -9,14 +9,14 @@ import { UsernameAlreadyExistsError } from '../errors/username-already-exists'
 
 let usersRepository: InMemoryUsersRepository
 let sutUserUpdate: UpdateUserUseCase
-let sutUserCreate: CreateUserUseCase
+let sutUserCreate: RegisterUserUseCase
 let sutUser: User
 
 describe('Update user use case', () => {
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository()
     sutUserUpdate = new UpdateUserUseCase(usersRepository)
-    sutUserCreate = new CreateUserUseCase(usersRepository)
+    sutUserCreate = new RegisterUserUseCase(usersRepository)
 
     const { user } = await sutUserCreate.execute({
       name: 'John Doe',

@@ -1,10 +1,10 @@
 import { z } from 'zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { makeCreateUserUseCase } from '@/use-cases/factories/make-create-user-use-case'
+import { makeRegisterUserUseCase } from '@/use-cases/factories/make-create-user-use-case'
 import { EmailAlreadyExistsError } from '@/use-cases/errors/email-already-exists'
 import { UsernameAlreadyExistsError } from '@/use-cases/errors/username-already-exists'
 
-export async function createUser(request: FastifyRequest, reply: FastifyReply) {
+export async function register(request: FastifyRequest, reply: FastifyReply) {
   const userBodySchema = z.object({
     email: z.string().email(),
     name: z.string().max(24, { message: "Name can't be greater than 24" }),
@@ -20,7 +20,7 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
   const { name, username, email, password } = userBodySchema.parse(request.body)
 
   try {
-    const createUserUseCase = await makeCreateUserUseCase()
+    const createUserUseCase = await makeRegisterUserUseCase()
 
     await createUserUseCase.execute({
       name,
