@@ -10,7 +10,7 @@ afterAll(() => {
   app.close()
 })
 
-describe('[POST] http /users', () => {
+describe('Create user (E2E))', () => {
   it('Should be register a new user', async () => {
     await request(app.server)
       .post('/users')
