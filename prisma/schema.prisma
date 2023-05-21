@@ -24,20 +24,18 @@ model User {
 }
 
 model Question {
-  id String @id @default(uuid())
+  id         String    @id @default(uuid())
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   title     String
   content   String
-  slug      String  @unique
-  votes     Int     @default(0)
-  anonymous Boolean @default(false)
+  anonymous Boolean?
+  votes     Int?     @default(0)
+  slug      String?  @unique
 
-  owner    User   @relation(fields: [owner_id], references: [id])
-  owner_id String
-
-  created_at   DateTime  @default(now())
-  updated_at   DateTime? @updatedAt
-  published_at DateTime?
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
 
   @@map("questions")
 }
