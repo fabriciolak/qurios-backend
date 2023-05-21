@@ -33,6 +33,8 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
         message: error.message,
       })
     }
+
+    throw error
   }
 
   return reply.status(200).send()

@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import fastifyJwt from '@fastify/jwt'
 import { userRoutes } from './http/controllers/user/routes'
+import { questionRoutes } from './http/controllers/question/routes'
 import { ZodError } from 'zod'
 
 export const app = fastify()
@@ -10,6 +11,7 @@ app.register(fastifyJwt, {
 })
 
 app.register(userRoutes)
+app.register(questionRoutes)
 
 app.get('/', (request, reply) => {
   console.log(request.method, request.url)

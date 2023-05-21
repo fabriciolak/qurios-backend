@@ -65,7 +65,7 @@ describe('Update user (E2E))', () => {
     await request(app.server)
       .put('/users')
       .set('Authorization', `Bearer ${token}`)
-      .send({ email: 'johndoe@does.com' })
+      .send({ email: 'johndoe2@does.com' })
       .expect(409)
   })
 })
