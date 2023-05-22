@@ -3,11 +3,11 @@ import { QuestionRepository } from '../question-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaQuestionRepository implements QuestionRepository {
-  async create(data: Prisma.QuestionCreateInput): Promise<Question> {
+  async create(data: Prisma.QuestionUncheckedCreateInput): Promise<Question> {
     const question = await prisma.question.create({
       data,
       include: {
-        owner: true,
+        user: true,
       },
     })
 
