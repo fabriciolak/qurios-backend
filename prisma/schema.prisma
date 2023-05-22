@@ -32,7 +32,7 @@ model Question {
   content   String
   anonymous Boolean? @default(false)
   votes     Int?     @default(0)
-  slug      String?  @db.VarChar(255)
+  slug      String?  @unique @db.VarChar(255)
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
