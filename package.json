@@ -52,6 +52,7 @@
     "inquirer": "8.2.5",
     "npm-run-all": "4.1.5",
     "prisma": "4.13.0",
+    "slugify": "1.6.6",
     "supertest": "6.3.3",
     "tsup": "6.7.0",
     "tsx": "^3.12.7",

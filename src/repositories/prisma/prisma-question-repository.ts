@@ -6,9 +6,6 @@ export class PrismaQuestionRepository implements QuestionRepository {
   async create(data: Prisma.QuestionUncheckedCreateInput): Promise<Question> {
     const question = await prisma.question.create({
       data,
-      include: {
-        user: true,
-      },
     })
 
     return question

@@ -34,7 +34,7 @@ describe('User authenticate', () => {
         email: 'wrongemail@does.com',
         password: '123456',
       }),
-    ).rejects.toThrowError('Invalid Credential Error')
+    ).rejects.toThrowError('Invalid Credentials Error')
   })
 
   it('Should not be able to authenticate with wrong password', async () => {
@@ -43,6 +43,6 @@ describe('User authenticate', () => {
         email: 'johndoe@does.com',
         password: '123456789101112',
       }),
-    ).rejects.toThrowError('Invalid Credential Error')
+    ).rejects.toThrowError('Invalid Credentials Error')
   })
 })
