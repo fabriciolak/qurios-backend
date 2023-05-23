@@ -98,7 +98,7 @@ describe('Create question (E2E)', () => {
       })
 
     expect(response.statusCode).toEqual(400)
-    expect(response.body.message).toEqual(
+    expect(response.body).toEqual(
       expect.objectContaining({
         message: 'Validation error',
       }),
