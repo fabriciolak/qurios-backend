@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import request from 'supertest'
 import { app } from '@/app'
+import { createAndAuthenticateTest } from '@/utils/test/create-and-authenticate'
 
 beforeAll(() => {
   app.ready()
@@ -12,53 +13,36 @@ afterAll(() => {
 
 describe('Create question (E2E)', () => {
   it('Should be create a question', async () => {
-    await request(app.server).post('/users').send({
-      name: 'John Doe',
-      username: 'johndoe',
-      email: 'johndoe2@does.com',
-      password: '123456',
-    })
-
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: 'johndoe2@does.com',
-      password: '123456',
-    })
-
-    const { token } = authResponse.body
+    const { token } = await createAndAuthenticateTest(app, {})
 
     const response = await request(app.server)
       .post('/question')
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'Lorem ipsum dolor sit amet',
-        content: 'consectetur adipiscing elit. Duis nec.',
+        content: 'Consectetur adipiscing elit',
         anonymous: false,
       })
 
-    expect(response.statusCode).toEqual(201)
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+      }),
+    )
   })
 
-  it('Should not be create a question with same title', async () => {
-    await request(app.server).post('/users').send({
-      name: 'John Doe',
-      username: 'johndoe',
-      email: 'johndoe2@does.com',
-      password: '123456',
+  it('User cannot create a question with a title already used', async () => {
+    const { token } = await createAndAuthenticateTest(app, {
+      email: 'testuser2@test.com',
+      username: 'testuser2',
     })
-
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: 'johndoe2@does.com',
-      password: '123456',
-    })
-
-    const { token } = authResponse.body
 
     await request(app.server)
       .post('/question')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'Aenean consectetur fringilla tincidunt.',
-        content: 'consectetur adipiscing elit. Duis nec.',
+        title: 'Lorem ipsum dolor sit amet',
+        content: 'Consectetur adipiscing elit',
         anonymous: false,
       })
 
@@ -66,38 +50,34 @@ describe('Create question (E2E)', () => {
       .post('/question')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'Aenean consectetur fringilla tincidunt.',
-        content: 'consectetur adipiscing elit. Duis nec.',
+        title: 'Lorem ipsum dolor sit amet',
+        content: 'Consectetur adipiscing elit',
         anonymous: false,
       })
 
     expect(response.statusCode).toEqual(409)
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        message:
+          'A publication with that title already exists. try another title',
+      }),
+    )
   })
 
-  it('Should not be create a question without title', async () => {
-    await request(app.server).post('/users').send({
-      name: 'John Doe',
-      username: 'johndoe',
-      email: 'johndoe2@does.com',
-      password: '123456',
+  it('Error on create a question without title or content', async () => {
+    const { token } = await createAndAuthenticateTest(app, {
+      email: 'testuser3@test.com',
+      username: 'testuser3',
     })
-
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: 'johndoe2@does.com',
-      password: '123456',
-    })
-
-    const { token } = authResponse.body
 
     const response = await request(app.server)
       .post('/question')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        content: 'consectetur adipiscing elit. Duis nec.',
+        content: 'Consectetur adipiscing elit',
         anonymous: false,
       })
 
-    expect(response.statusCode).toEqual(400)
     expect(response.body).toEqual(
       expect.objectContaining({
         message: 'Validation error',

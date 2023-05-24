@@ -22,28 +22,28 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     const { title, content, anonymous } = createQuestionBodySchema.parse(
       request.body,
     )
+
     const userProfile = await prisma.user.findUnique({
       where: {
         id: request.user.sub,
       },
       select: {
         username: true,
+        questions: true,
       },
     })
 
     const generatedSlugUrl = `${userProfile?.username}/${generateSlug(title)}`
 
-    const publicationTitleDuplicated = await prisma.question.findFirst({
-      where: {
-        slug: generatedSlugUrl,
-      },
+    const slugAlreadyExists = userProfile?.questions.find((question) => {
+      return question.slug === generatedSlugUrl
     })
 
-    if (publicationTitleDuplicated) {
+    if (slugAlreadyExists) {
       throw new TitleSlugAlreadyExistsError()
     }
 
-    questionRepository.execute({
+    const { question } = await questionRepository.execute({
       title,
       content,
       anonymous,
@@ -51,6 +51,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       user_id: request.user.sub,
       votes: 0,
     })
+
+    return reply.status(201).send(question)
   } catch (error) {
     if (error instanceof TitleSlugAlreadyExistsError) {
       return reply.status(409).send({
@@ -64,8 +66,12 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       })
     }
 
+    if (error instanceof TitleSlugAlreadyExistsError) {
+      return reply.status(409).send({
+        message: error.message,
+      })
+    }
+
     throw error
   }
-
-  return reply.status(201).send()
 }
