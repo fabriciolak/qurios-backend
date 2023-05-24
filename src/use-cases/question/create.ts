@@ -7,7 +7,7 @@ interface CreateQuestionUseCaseRequest {
   slug: string
   anonymous: boolean
   votes: number
-  owner_id: string
+  user_id: string
 }
 interface CreateQuestionUseCaseResponse {
   question: Question
@@ -22,7 +22,7 @@ export class CreateQuestionUseCase {
     slug = '',
     anonymous = false,
     votes = 0,
-    owner_id,
+    user_id,
   }: CreateQuestionUseCaseRequest): Promise<CreateQuestionUseCaseResponse> {
     if (!title) {
       throw new Error('title are required')
@@ -38,7 +38,7 @@ export class CreateQuestionUseCase {
       slug,
       anonymous,
       votes,
-      owner_id,
+      user_id,
     })
 
     return {

@@ -33,10 +33,10 @@ describe('Question use case', () => {
       anonymous: false,
       slug: 'title',
       votes: 0,
-      owner_id: user.id,
+      user_id: user.id,
     })
 
-    expect(question.owner_id).toEqual(user.id)
+    expect(question.user_id).toEqual(user.id)
   })
 
   it('Should be crate a anonymous question', async () => {
@@ -53,10 +53,10 @@ describe('Question use case', () => {
       anonymous: true,
       slug: 'title',
       votes: 0,
-      owner_id: user.id,
+      user_id: user.id,
     })
 
-    expect(question.owner_id).toEqual('')
+    expect(question.user_id).toEqual('')
   })
 
   it('Should not be crate a question without content and title', async () => {
@@ -74,7 +74,7 @@ describe('Question use case', () => {
         anonymous: true,
         slug: 'title',
         votes: 0,
-        owner_id: user.id,
+        user_id: user.id,
       }),
     ).rejects.toThrowError('title are required')
 
@@ -85,7 +85,7 @@ describe('Question use case', () => {
         anonymous: true,
         slug: 'title',
         votes: 0,
-        owner_id: user.id,
+        user_id: user.id,
       }),
     ).rejects.toThrowError('content are required')
   })
