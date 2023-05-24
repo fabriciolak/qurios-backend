@@ -1,9 +1,10 @@
 import slugify from 'slugify'
 
 export function generateSlug(title: string) {
+  slugify.extend({ ㅤ: '-' })
   const slug = slugify(title, {
     replacement: '-',
-    remove: /[*+~.()'"!?:@]/g,
+    remove: /[*+~.()'"!?:@ㅤ]/g,
     lower: true,
     trim: true,
     locale: 'pt',
