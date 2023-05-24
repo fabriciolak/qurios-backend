@@ -7,4 +7,5 @@ export interface QuestionRepository {
     data: Prisma.QuestionUpdateInput,
   ): Promise<Question | null>
   delete(questionId: string): Promise<{}>
+  findBySlug(slug: string): Promise<Question | null>
 }
