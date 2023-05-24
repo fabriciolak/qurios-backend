@@ -1,6 +1,7 @@
 import { Prisma, Question } from '@prisma/client'
 import { QuestionRepository } from '../question-repository'
 import { randomUUID } from 'crypto'
+import { TitleSlugAlreadyExistsError } from '@/use-cases/errors/title-slug-already-exisits'
 
 export class InMemoryQuestionRepository implements QuestionRepository {
   public questions: Question[] = []
@@ -62,5 +63,17 @@ export class InMemoryQuestionRepository implements QuestionRepository {
     }
 
     return {}
+  }
+
+  async findBySlug(slug: string): Promise<Question | null> {
+    const questionIndex = this.questions.findIndex(
+      (question) => question.slug === slug,
+    )
+
+    if (questionIndex !== -1) {
+      throw new TitleSlugAlreadyExistsError()
+    }
+
+    return this.questions[questionIndex]
   }
 }
