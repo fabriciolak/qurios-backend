@@ -1,4 +1,3 @@
-// import { prisma } from '@/lib/prisma'
 import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials'
 import { NotFoundError } from '@/use-cases/errors/not-found-error'
 import { TitleSlugAlreadyExistsError } from '@/use-cases/errors/title-slug-already-exisits'
@@ -36,29 +35,6 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
       request.body,
     )
     const { questionId } = updateQuestionParamsSchema.parse(request.params)
-
-    // const questionToUpdate = await prisma.question.findFirst({
-    //   where: {
-    //     id: questionId,
-    //   },
-    // })
-
-    // if (!questionToUpdate) {
-    //   throw new NotFoundError()
-    // }
-
-    // const userHavePermission = await prisma.question.findFirst({
-    //   where: {
-    //     id: questionId,
-    //     AND: {
-    //       user_id: request.user.sub,
-    //     },
-    //   },
-    // })
-
-    // if (!userHavePermission) {
-    //   throw new InvalidCredentialsError()
-    // }
 
     const { question } = await questionRepository.execute(questionId, {
       title,
