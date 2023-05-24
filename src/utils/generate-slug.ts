@@ -1,6 +1,6 @@
 import slugify from 'slugify'
 
-export function generateSlug(title: string) {
+export function generateSlug(title: string): string {
   slugify.extend({ ㅤ: '-' })
   const slug = slugify(title, {
     replacement: '-',
