@@ -4,6 +4,8 @@
   "description": "A platform where users can ask questions and share with other users anonymously or publicly.",
   "main": "index.js",
   "scripts": {
+    "build": "tsup src --out-dir build",
+    "start": "node build/server.js",
     "dev": "tsx watch src/server.ts",
     "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
