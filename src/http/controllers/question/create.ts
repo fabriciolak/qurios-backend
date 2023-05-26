@@ -7,8 +7,8 @@ import { ZodError, z } from 'zod'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createQuestionBodySchema = z.object({
-    title: z.string().min(6, {
-      message: 'The title should be a minimum of 6 characters.',
+    title: z.string().min(1, {
+      message: 'The title should be a minimum of 1 characters.',
     }),
     content: z.string().min(1, {
       message: 'The content should be a minimum of 1 characters.',
