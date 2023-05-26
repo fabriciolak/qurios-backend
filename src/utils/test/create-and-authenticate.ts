@@ -12,7 +12,7 @@ export async function createAndAuthenticateTest(
   app: FastifyInstance,
   { email, username }: CreateAndAuthenticateUserType,
 ) {
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       email: email || 'testuser@test.com',
       username: username || 'testuser',
@@ -32,5 +32,6 @@ export async function createAndAuthenticateTest(
 
   return {
     token,
+    user,
   }
 }
