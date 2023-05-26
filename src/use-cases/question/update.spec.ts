@@ -35,17 +35,15 @@ describe('Update question use case', () => {
       title: "John Doe's question",
       content: "John Doe's question content",
       anonymous: false,
-      owner_id: user.id,
+      user_id: user.id,
       slug: 'john-does-question',
       votes: 0,
     })
 
-    const response = await sut.execute({
-      questionId: question.id,
-      data: {
-        title: 'Updated',
-        updated_at: new Date('2023-05-19T19:59:01.250Z'),
-      },
+    const response = await sut.execute(question.id, {
+      title: 'Updated',
+      updated_at: new Date('2023-05-19T19:59:01.250Z'),
+      user_id: user.id,
     })
 
     expect(response.question).toEqual(

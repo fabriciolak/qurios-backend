@@ -30,9 +30,15 @@ model Question {
 
   title     String
   content   String
+<<<<<<< HEAD
   anonymous Boolean?
   votes     Int?     @default(0)
   slug      String?  @unique
+=======
+  anonymous Boolean? @default(false)
+  votes     Int?     @default(0)
+  slug      String?  @unique @db.VarChar(255)
+>>>>>>> cdeb411cfb820420cf49dfb32c4f594dfb1afd1d
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
