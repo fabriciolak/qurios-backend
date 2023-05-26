@@ -12,7 +12,7 @@ afterAll(() => {
 })
 
 describe('Question list (E2E)', () => {
-  it.only('Should be show a list of questions', async () => {
+  it('Should be show a list of questions', async () => {
     const { token } = await createAndAuthenticateTest(app, {})
 
     await request(app.server)
