@@ -6,7 +6,7 @@ export async function questionList(
   reply: FastifyReply,
 ) {
   const questions = await prisma.question.findMany({
-    take: 2,
+    take: 20,
     // skip: (1 - 1) * 20,
     orderBy: [
       {
