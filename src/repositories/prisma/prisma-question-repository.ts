@@ -78,8 +78,14 @@ export class PrismaQuestionRepository implements QuestionRepository {
     }
   }
 
-  delete(questionId: string): Promise<{}> {
-    throw new Error('Method not implemented.')
+  async delete(questionId: string): Promise<{} | undefined> {
+    await prisma.question.delete({
+      where: {
+        id: questionId,
+      },
+    })
+
+    return {}
   }
 
   async findBySlug(slug: string): Promise<Question | null> {

@@ -1,18 +1,14 @@
 import { QuestionRepository } from '@/repositories/question-repository'
 
 interface DeleteQuestionUseCaseRequest {
-  questionId: string
+  question_id: string
 }
 
 export class DeleteQuestionUseCase {
   constructor(private questionsRepository: QuestionRepository) {}
 
-  async execute({ questionId }: DeleteQuestionUseCaseRequest): Promise<{}> {
-    if (!questionId) {
-      throw new Error('question id are required')
-    }
-
-    await this.questionsRepository.delete(questionId)
+  async execute({ question_id }: DeleteQuestionUseCaseRequest): Promise<{}> {
+    await this.questionsRepository.delete(question_id)
 
     return {}
   }
