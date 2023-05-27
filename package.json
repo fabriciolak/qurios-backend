@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A platform where users can ask questions and share with other users anonymously or publicly.",
   "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsup src --out-dir build",
     "start": "node build/server.js",
