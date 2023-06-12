@@ -84,6 +84,13 @@ var EmailAlreadyExistsError = class extends Error {
   }
 };
 
+// src/use-cases/errors/username-already-exists.ts
+var UsernameAlreadyExistsError = class extends Error {
+  constructor() {
+    super("Username with same username already exists");
+  }
+};
+
 // src/use-cases/user/register.ts
 var RegisterUserUseCase = class {
   constructor(usersRepository) {
@@ -103,7 +110,7 @@ var RegisterUserUseCase = class {
       username
     );
     if (usernameAlreadyExists) {
-      throw new Error("Username with same username already exists");
+      throw new UsernameAlreadyExistsError();
     }
     if (password.length < 6) {
       throw new Error("Password must be at least 6 characters");

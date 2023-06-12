@@ -245,7 +245,7 @@ var RegisterUserUseCase = class {
       username
     );
     if (usernameAlreadyExists) {
-      throw new Error("Username with same username already exists");
+      throw new UsernameAlreadyExistsError();
     }
     if (password.length < 6) {
       throw new Error("Password must be at least 6 characters");

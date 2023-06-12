@@ -2,6 +2,7 @@ import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
 import { UsersRepository } from '@/repositories/users-repository'
 import { EmailAlreadyExistsError } from '../errors/email-already-exists'
+import { UsernameAlreadyExistsError } from '../errors/username-already-exists'
 
 interface RegisterUserUseCaseRequest {
   name: string
@@ -34,7 +35,7 @@ export class RegisterUserUseCase {
     )
 
     if (usernameAlreadyExists) {
-      throw new Error('Username with same username already exists')
+      throw new UsernameAlreadyExistsError()
     }
 
     if (password.length < 6) {

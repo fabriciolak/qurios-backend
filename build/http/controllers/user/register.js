@@ -85,6 +85,13 @@ var EmailAlreadyExistsError = class extends Error {
   }
 };
 
+// src/use-cases/errors/username-already-exists.ts
+var UsernameAlreadyExistsError = class extends Error {
+  constructor() {
+    super("Username with same username already exists");
+  }
+};
+
 // src/use-cases/user/register.ts
 var RegisterUserUseCase = class {
   constructor(usersRepository) {
@@ -104,7 +111,7 @@ var RegisterUserUseCase = class {
       username
     );
     if (usernameAlreadyExists) {
-      throw new Error("Username with same username already exists");
+      throw new UsernameAlreadyExistsError();
     }
     if (password.length < 6) {
       throw new Error("Password must be at least 6 characters");
@@ -129,13 +136,6 @@ async function makeRegisterUserUseCase() {
   return userUseCase;
 }
 
-// src/use-cases/errors/username-already-exists.ts
-var UsernameAlreadyExistsError = class extends Error {
-  constructor() {
-    super("Username with same username already exists");
-  }
-};
-
 // src/http/controllers/user/register.ts
 async function register(request, reply) {
   const userBodySchema = import_zod.z.object({
@@ -147,12 +147,14 @@ async function register(request, reply) {
   const { name, username, email, password } = userBodySchema.parse(request.body);
   try {
     const createUserUseCase = await makeRegisterUserUseCase();
-    await createUserUseCase.execute({
+    const { user } = await createUserUseCase.execute({
       name,
       username,
       email,
       password
     });
+    const { password_hash, ...userWithoutPassword } = user;
+    return reply.status(200).send(userWithoutPassword);
   } catch (error) {
     if (error instanceof EmailAlreadyExistsError) {
       return reply.status(409).send({
@@ -166,7 +168,6 @@ async function register(request, reply) {
     }
     throw error;
   }
-  return reply.status(201).send();
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
