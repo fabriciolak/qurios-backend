@@ -30,6 +30,7 @@
   "author": "fabriciolak",
   "license": "MIT",
   "dependencies": {
+    "@fastify/cors": "8.3.0",
     "@fastify/jwt": "6.7.1",
     "@prisma/client": "4.13.0",
     "bcryptjs": "2.4.3",

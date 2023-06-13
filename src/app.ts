@@ -1,10 +1,16 @@
 import fastify from 'fastify'
 import fastifyJwt from '@fastify/jwt'
+import fastifyCors from '@fastify/cors'
 import { userRoutes } from './http/controllers/user/routes'
 import { questionRoutes } from './http/controllers/question/routes'
 import { ZodError } from 'zod'
 
 export const app = fastify()
+
+app.register(fastifyCors, {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+})
 
 app.register(fastifyJwt, {
   secret: process.env.JWT_SECRET as string,
