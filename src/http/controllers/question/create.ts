@@ -30,6 +30,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       select: {
         username: true,
         questions: true,
+        Comment: true,
       },
     })
 

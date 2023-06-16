@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -20,6 +20,7 @@ model User {
   created_at    DateTime @default(now())
 
   questions Question[]
+  Comment   Comment[]
 
   @@map("users")
 }
@@ -38,6 +39,26 @@ model Question {
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
 
+  comments Comment[]
+
   @@index([user_id])
   @@map("questions")
+}
+
+model Comment {
+  id         String    @id @default(uuid())
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  text String
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  Question    Question? @relation(fields: [question_id], references: [id])
+  question_id String?
+
+  @@index([user_id])
+  @@index([question_id])
+  @@map("comments")
 }

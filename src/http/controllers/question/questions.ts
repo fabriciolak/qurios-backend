@@ -8,11 +8,15 @@ export async function questionList(
   const questions = await prisma.question.findMany({
     take: 20,
     // skip: (1 - 1) * 20,
+
     orderBy: [
       {
-        created_at: 'asc',
+        created_at: 'desc',
       },
     ],
+    include: {
+      comments: true,
+    },
   })
 
   return reply.status(200).send(questions)
