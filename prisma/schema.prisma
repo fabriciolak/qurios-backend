@@ -33,8 +33,9 @@ model Question {
   title     String
   content   String
   anonymous Boolean?
-  votes     Int?     @default(0)
-  slug      String?  @unique
+  type      QuestionType?
+  votes     Int?          @default(0)
+  slug      String?       @unique
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
@@ -61,4 +62,12 @@ model Comment {
   @@index([user_id])
   @@index([question_id])
   @@map("comments")
+}
+
+enum QuestionType {
+  FRIEND
+  LOVE
+  COLLEGE
+  STANGER
+  FAMILY
 }

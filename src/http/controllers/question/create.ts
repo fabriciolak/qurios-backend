@@ -14,6 +14,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       message: 'The content should be a minimum of 1 characters.',
     }),
     anonymous: z.boolean().default(false),
+    type: z.enum(['Friend', 'Love', 'College', 'Stranger', 'Family']),
   })
 
   const questionRepository = await makeCreateQuestionUseCase()
