@@ -11,6 +11,9 @@ export async function getQuestion(
     where: {
       id: questionId,
     },
+    include: {
+      comments: true,
+    },
   })
 
   return reply.status(200).send(question)
