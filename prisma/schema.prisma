@@ -68,6 +68,6 @@ enum QuestionType {
   FRIEND
   LOVE
   COLLEGE
-  STANGER
+  STRANGER
   FAMILY
 }

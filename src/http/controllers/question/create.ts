@@ -14,13 +14,13 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       message: 'The content should be a minimum of 1 characters.',
     }),
     anonymous: z.boolean().default(false),
-    type: z.enum(['Friend', 'Love', 'College', 'Stranger', 'Family']),
+    type: z.enum(['FRIEND', 'LOVE', 'COLLEGE', 'STRANGER', 'FAMILY']),
   })
 
   const questionRepository = await makeCreateQuestionUseCase()
 
   try {
-    const { title, content, anonymous } = createQuestionBodySchema.parse(
+    const { title, content, anonymous, type } = createQuestionBodySchema.parse(
       request.body,
     )
 
@@ -52,6 +52,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       slug: generatedSlugUrl,
       user_id: request.user.sub,
       votes: 0,
+      type,
     })
 
     return reply.status(201).send(question)
