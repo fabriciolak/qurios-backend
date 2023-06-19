@@ -14,7 +14,12 @@ export async function getQuestion(
     include: {
       comments: {
         select: {
-          user: true,
+          user: {
+            select: {
+              name: true,
+              username: true,
+            },
+          },
           text: true,
           question_id: true,
           created_at: true,
