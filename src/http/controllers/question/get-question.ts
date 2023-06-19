@@ -12,11 +12,14 @@ export async function getQuestion(
       id: questionId,
     },
     include: {
-      comments: true,
-      user: {
+      comments: {
         select: {
-          name: true,
-          username: true,
+          user: true,
+          text: true,
+          question_id: true,
+          created_at: true,
+          id: true,
+          user_id: true,
         },
       },
     },
