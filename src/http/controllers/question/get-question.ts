@@ -26,6 +26,11 @@ export async function getQuestion(
           id: true,
           user_id: true,
         },
+        orderBy: [
+          {
+            created_at: 'desc',
+          },
+        ],
       },
     },
   })
