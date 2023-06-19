@@ -13,6 +13,12 @@ export async function getQuestion(
     },
     include: {
       comments: true,
+      user: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
     },
   })
 
